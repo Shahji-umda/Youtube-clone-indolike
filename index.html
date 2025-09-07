@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .sidebar-item:hover {
+            background-color: #f2f2f2;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [videos, setVideos] = useState([]);
+            const [sidebarOpen, setSidebarOpen] = useState(true);
+            const [darkMode, setDarkMode] = useState(false);
+
+            useEffect(() => {
+                // Mock data for videos
+                const mockVideos = [
+                    {
+                        id: 1,
+                        title: "Building a YouTube Clone with React.js",
+                        channel: "CodeWithMe",
+                        views: "120K views",
+                        timestamp: "3 days ago",
+                        thumbnail: "http://static.photos/technology/640x360/1",
+                        avatar: "http://static.photos/people/200x200/1"
+                    },
+                    {
+                        id: 2,
+                        title: "Learn TailwindCSS in 1 Hour",
+                        channel: "WebDev Simplified",
+                        views: "450K views",
+                        timestamp: "1 week ago",
+                        thumbnail: "http://static.photos/technology/640x360/2",
+                        avatar: "http://static.photos/people/200x200/2"
+                    },
+                    {
+                        id: 3,
+                        title: "React Hooks Explained",
+                        channel: "React Masters",
+                        views: "1.2M views",
+                        timestamp: "2 months ago",
+                        thumbnail: "http://static.photos/technology/640x360/3",
+                        avatar: "http://static.photos/people/200x200/3"
+                    },
+                    {
+                        id: 4,
+                        title: "Modern UI Design Trends 2023",
+                        channel: "DesignHub",
+                        views: "890K views",
+                        timestamp: "3 weeks ago",
+                        thumbnail: "http://static.photos/technology/640x360/4",
+                        avatar: "http://static.photos/people/200x200/4"
+                    },
+                    {
+                        id: 5,
+                        title: "Building a Full Stack App with MERN",
+                        channel: "FullStack Dev",
+                        views: "320K views",
+                        timestamp: "5 days ago",
+                        thumbnail: "http://static.photos/technology/640x360/5",
+                        avatar: "http://static.photos/people/200x200/5"
+                    },
+                    {
+                        id: 6,
+                        title: "JavaScript ES6 Features You Should Know",
+                        channel: "JS Wizards",
+                        views: "1.5M views",
+                        timestamp: "1 month ago",
+                        thumbnail: "http://static.photos/technology/640x360/6",
+                        avatar: "http://static.photos/people/200x200/6"
+                    }
+                ];
+                setVideos(mockVideos);
+            }, []);
+
+            const toggleSidebar = () => {
+                setSidebarOpen(!sidebarOpen);
+            };
+
+            const toggleDarkMode = () => {
+                setDarkMode(!darkMode);
+            };
+
+            return (
+                <div className={`flex flex-col h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+                    {/* Header */}
+                    <header className={`flex items-center justify-between px-4 py-2 ${darkMode ? 'bg-gray-800' : 'bg-white'} border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                        <div className="flex items-center">
+                            <button onClick={toggleSidebar} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                                <i data-feather="menu"></i>
+                            </button>
+                            <div className="flex items-center ml-4 cursor-pointer">
+                                <i data-feather="youtube" className="text-red-600 w-8 h-8"></i>
+                                <span className="ml-2 font-bold text-xl">YouTube</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center w-1/2">
+                            <div className="flex w-full">
+                                <input
+                                    type="text"
+                                    placeholder="Search"
+                                    className={`w-full px-4 py-2 rounded-l-full border ${darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+                                />
+                                <button className={`px-5 py-2 rounded-r-full border ${darkMode ? 'bg-gray-700 border-gray-600 hover:bg-gray-600' : 'bg-gray-100 border-gray-300 hover:bg-gray-200'}`}>
+                                    <i data-feather="search"></i>
+                                </button>
+                            </div>
+                            <button className="ml-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                                <i data-feather="mic"></i>
+                            </button>
+                        </div>
+
+                        <div className="flex items-center">
+                            <button onClick={toggleDarkMode} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                                <i data-feather={darkMode ? "sun" : "moon"}></i>
+                            </button>
+                            <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 ml-2">
+                                <i data-feather="video"></i>
+                            </button>
+                            <button className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 ml-2">
+                                <i data-feather="bell"></i>
+                            </button>
+                            <div className="ml-2 w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white">
+                                <i data-feather="user"></i>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div className="flex flex-1 overflow-hidden">
+                        {/* Sidebar */}
+                        {sidebarOpen && (
+                            <aside className={`w-64 ${darkMode ? 'bg-gray-800' : 'bg-white'} overflow-y-auto border-r ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+                                <div className="py-2">
+                                    <SidebarItem icon="home" text="Home" active />
+                                    <SidebarItem icon="compass" text="Explore" />
+                                    <SidebarItem icon="bookmark" text="Subscriptions" />
+                                </div>
+
+                                <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+                                    <SidebarItem icon="hard-drive" text="Library" />
+                                    <SidebarItem icon="clock" text="History" />
+                                    <SidebarItem icon="youtube" text="Your videos" />
+                                    <SidebarItem icon="thumbs-up" text="Liked videos" />
+                                </div>
+
+                                <div className="border-t border-gray-200 dark:border-gray-700 pt-2 mt-2">
+                                    <h3 className="px-4 py-2 font-medium text-sm">SUBSCRIPTIONS</h3>
+                                    <SidebarItem image="http://static.photos/people/200x200/1" text="CodeWithMe" />
+                                    <SidebarItem image="http://static.photos/people/200x200/2" text="WebDev Simplified" />
+                                    <SidebarItem image="http://static.photos/people/200x200/3" text="React Masters" />
+                                    <SidebarItem image="http://static.photos/people/200x200/4" text="DesignHub" />
+                                </div>
+                            </aside>
+                        )}
+
+                        {/* Main Content */}
+                        <main className="flex-1 overflow-y-auto p-4">
+                            {/* Categories */}
+                            <div className="flex space-x-2 mb-4 overflow-x-auto pb-2">
+                                {['All', 'React', 'JavaScript', 'CSS', 'Web Development', 'UI/UX', 'Programming', 'Computer Science', 'Live', 'Music'].map((category, index) => (
+                                    <button
+                                        key={index}
+                                        className={`px-3 py-1 rounded-full text-sm whitespace-nowrap ${index === 0 ? (darkMode ? 'bg-white text-black' : 'bg-black text-white') : (darkMode ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-800')}`}
+                                    >
+                                        {category}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Videos Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {videos.map(video => (
+                                    <VideoCard key={video.id} video={video} darkMode={darkMode} />
+                                ))}
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        }
+
+        function SidebarItem({ icon, text, active = false, image }) {
+            return (
+                <div className={`flex items-center px-4 py-2 cursor-pointer sidebar-item rounded-lg ${active ? 'bg-gray-200 dark:bg-gray-700' : ''}`}>
+                    {icon && <i data-feather={icon} className="w-5 h-5"></i>}
+                    {image && <img src={image} alt="" className="w-6 h-6 rounded-full mr-4" />}
+                    <span className="ml-4 text-sm">{text}</span>
+                </div>
+            );
+        }
+
+        function VideoCard({ video, darkMode }) {
+            return (
+                <div className={`video-card rounded-lg overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+                    <div className="relative pb-[56.25%]">
+                        <img
+                            src={video.thumbnail}
+                            alt={video.title}
+                            className="absolute h-full w-full object-cover"
+                        />
+                        <div className="absolute bottom-2 right-2 bg-black bg-opacity-80 text-white text-xs px-1 rounded">
+                            10:30
+                        </div>
+                    </div>
+                    <div className="p-2">
+                        <div className="flex mt-2">
+                            <img
+                                src={video.avatar}
+                                alt={video.channel}
+                                className="w-9 h-9 rounded-full mr-3"
+                            />
+                            <div>
+                                <h3 className={`font-medium text-sm mb-1 line-clamp-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>{video.title}</h3>
+                                <p className="text-xs text-gray-500">{video.channel}</p>
+                                <p className="text-xs text-gray-500">{video.views} • {video.timestamp}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+        feather.replace();
+    </script>
+</body>
+
+</html>
